@@ -1,0 +1,7 @@
+/.idea
+/tmp
+/lib
+/test-dist
+/node_modules
+/coverage
+/build
