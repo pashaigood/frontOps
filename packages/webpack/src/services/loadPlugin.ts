@@ -14,7 +14,7 @@ const PACKAGE_SCOPE: [string] = ['dependencies', 'devDependencies', 'peerDepende
 const PARENT_DIR = path.dirname(module.parent.filename);
 
 declare type LoadPluginOptions = {
-  pattern: [string],
+  pattern?: [string],
   DEBUG?: boolean,
   scope?: string|[string],
   replaceString?: RegExp,
@@ -25,7 +25,8 @@ declare type LoadPluginOptions = {
   renameFn?: Function,
   rename?: Object,
   lazy?: boolean ,
-  postRequireTransforms?: Object
+  postRequireTransforms?: Object,
+  maintainScope?: boolean
 }
 
 function fromLocal (options: LoadPluginOptions) {
@@ -197,11 +198,7 @@ function camelize(str) {
   });
 }
 
-// code from https://github.com/gulpjs/gulp-util/blob/master/lib/log.js
-// to use the same functionality as gulp-util for backwards compatibility
-// with gulp 3x cli
 function logger() {
-  // specifically defering loading because it might not be used
   const fancylog = require('fancy-log');
   fancylog.apply(null, arguments);
 }

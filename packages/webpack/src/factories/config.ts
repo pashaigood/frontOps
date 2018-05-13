@@ -8,8 +8,7 @@ declare type WebpackOptions = {
 }
 
 export default function (options: WebpackOptions): Object {
-  const blocks = getBlocks(options)
-
+  const blocks = getBlocks(options);
   const config = webpackBlocks.createConfig({}, blocks);
 
   return config
