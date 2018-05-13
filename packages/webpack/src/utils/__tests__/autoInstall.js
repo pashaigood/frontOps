@@ -1,5 +1,4 @@
 import path from 'path'
-import { spawn } from 'child_process'
 import resolve from 'resolve'
 import findNodeModules from 'find-node-modules'
 import promisify from 'promisify-node'
@@ -7,25 +6,18 @@ import _rimraf from 'rimraf'
 import autoInstall, {AutoInstallerMessageTypes} from '../autoInstall'
 
 const rimraf = promisify(_rimraf)
-const debug = true
+const debug = false
 
 const installProps = {
-  installProps: ['--no-save', '--no-audit'],
+  installProps: ['--no-save', '--no-audit', '--no-shrinkwrap', '--ignore-scripts', '--no-package-lock'],
   debug
 }
 
-
-const existingModule = 'lodash.flip'
+const existingModules = ['lodash.flip', 'lodash.ismap']
 
 describe('utils/autoInstall', () => {
-  beforeAll((done) => {
-    const existingModulePath = path.resolve(__dirname, findNodeModules(__dirname).shift(), existingModule)
-    debug && console.log(existingModulePath)
-    rimraf(existingModulePath).then(done)
-    /*rimraf(existingModulePath, () => {
-      done()
-    })*/
-  })
+  beforeAll(cleanModules)
+  afterAll(cleanModules)
 
   it('should break execution with unexisting module.', (done) => {
     const installer = autoInstall(
@@ -37,7 +29,7 @@ describe('utils/autoInstall', () => {
         done()
       }
     }
-  }, 120000)
+  }, debug ? 20000 : 120000)
 
   it('should install module and rerun.', (done) => {
     const installer = autoInstall(
@@ -45,18 +37,35 @@ describe('utils/autoInstall', () => {
       installProps
     )
 
-    let installedModules = new Set()
+    let installedModules = []
 
     installer.onMessage = message => {
-      if (message.type === AutoInstallerMessageTypes.INSTALL) {
-        expect(resolve.sync(existingModule)).toBeTruthy()
-        installedModules.add(message.payload)
-        done()
+      if (message.type === AutoInstallerMessageTypes.ERROR) {
+        expect(true).toBeFalsy('Do not expect installing error.')
       }
 
-      /*if (message.type === AutoInstallerMessageTypes.RESTART && installedModules.length === 2) {
+      if (message.type === AutoInstallerMessageTypes.INSTALL) {
+        expect(resolve.sync(message.payload)).toBeTruthy()
+        installedModules.push(message.payload)
+      }
+
+      if (
+        installedModules.length === existingModules.length &&
+        message.type === AutoInstallerMessageTypes.RESTART
+      ) {
+        installer.kill()
         done()
-      }*/
+      }
     }
-  }, 120000)
+  }, debug ? 40000 : 120000)
 })
+
+function cleanModules (done) {
+  const modulesPath = path.resolve(__dirname, findNodeModules(__dirname).shift())
+  Promise.all(
+    existingModules.map(moduleName => {
+      const existingModulePath = path.resolve(modulesPath, moduleName)
+      return rimraf(existingModulePath)
+    })
+  ).then(() => done())
+}

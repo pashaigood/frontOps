@@ -1,30 +1,18 @@
-import { fork, spawn } from 'child_process';
-import _defaults from 'lodash/defaults'
+import {ChildProcess, fork, spawn} from 'child_process';
 
 const notFoundModule: RegExp = new RegExp(`Error: Cannot find module '(.+?)'`);
 
-declare type Stream = {
-  write: Function,
-  on: Function
-}
-
-declare type Process = {
-  stdout: Stream,
-  stderr: Stream,
-  kill: Function
-}
-
 declare type AutoInstallerProps = {
-  process?: Process,
+  process?: NodeJS.Process,
   debug?: boolean
 }
 
 export enum AutoInstallerMessageTypes {
-  START,
   RESTART,
   BEFORE_INSTALL,
   INSTALL,
-  ERROR
+  ERROR,
+  KILL
 }
 
 declare type AutoInstallerMessage = {
@@ -32,25 +20,33 @@ declare type AutoInstallerMessage = {
   payload?: any
 }
 
-export default class AutoInstaller {
-  private debug: boolean;
-  private process: Process;
-  private watcher: Process;
-  private installProps: [string];
-  requiredModule: string;
+const SIGNAL = 'SIGKILL';
 
-  constructor(requiredModule: string, props: AutoInstallerProps = {}) {
+export default class AutoInstaller {
+  private killed: boolean = false;
+  private debug: boolean = false;
+  private process: NodeJS.Process = process;
+  private watcher: ChildProcess;
+  private installer: ChildProcess;
+  private installProps: [string] = [];
+  private requiredModule: string;
+
+  constructor (requiredModule: string, props: AutoInstallerProps = {}) {
     this.requiredModule = requiredModule;
 
-    Object.assign(this, _defaults(props, {
-      process,
-      installProps: []
-    }));
+    Object.assign(this, props);
 
     this.start();
   }
 
-  start () {
+  private start () {
+    if (this.killed) {
+      return false;
+    }
+
+    if (this.watcher) {
+      this.watcher.kill(SIGNAL)
+    }
     const watcher = this.watcher = fork(this.requiredModule, {
       stdio: [0, 1, 'pipe', 'ipc']
     });
@@ -69,46 +65,64 @@ export default class AutoInstaller {
     return watcher
   }
 
-  restart () {
-    this.watcher.kill();
+  private restart () {
+    if (this.killed) {
+      return;
+    }
+
     this.message({
       type: AutoInstallerMessageTypes.RESTART
     });
     this.start()
   }
 
-  install (moduleName) {
+  private install (moduleName) {
+    if (this.killed) {
+      return;
+    }
+
     this.message({
       type: AutoInstallerMessageTypes.BEFORE_INSTALL,
       payload: moduleName
     });
-    spawn('npm', ['install', moduleName].concat(this.installProps), {
+    this.installer = spawn('npm', ['install', moduleName].concat(this.installProps), {
       stdio: !this.debug ? 'pipe' : 'inherit'
     })
-      .on('exit', (code, signal) => {
-        if (code === 1) {
-          this.message({
-            type: AutoInstallerMessageTypes.ERROR,
-            payload: moduleName
-          });
-          this.watcher.kill();
-          this.message({
-            type: AutoInstallerMessageTypes.ERROR,
-            payload: moduleName
-          });
-        } else {
-          this.message({
-            type: AutoInstallerMessageTypes.INSTALL,
-            payload: moduleName
-          });
-          this.restart();
-        }
+      .on('exit', this.onInstallFinish.bind(this, moduleName));
+  }
+
+  private onInstallFinish (moduleName, code) {
+    if (this.killed) {
+      return;
+    }
+
+    if (code === 1) {
+      this.kill();
+      this.message({
+        type: AutoInstallerMessageTypes.ERROR,
+        payload: moduleName
       });
+    } else {
+      this.message({
+        type: AutoInstallerMessageTypes.INSTALL,
+        payload: moduleName
+      });
+      this.restart();
+    }
+  }
+
+  private message (message: AutoInstallerMessage) {
+    this.onMessage(message)
   }
 
   onMessage (message: AutoInstallerMessage) {}
 
-  private message (message: AutoInstallerMessage) {
-    this.onMessage(message)
+  kill () {
+    this.message({
+      type: AutoInstallerMessageTypes.KILL
+    });
+    this.killed = true;
+    this.watcher.kill(SIGNAL);
+    this.installer && this.installer.kill(SIGNAL)
   }
 }
