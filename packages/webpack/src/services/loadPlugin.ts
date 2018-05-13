@@ -1,9 +1,9 @@
-const micromatch = require('micromatch');
-const fastGlob = require('fast-glob');
-const unique = require('array-unique');
-const findup = require('findup-sync');
-const resolve = require('resolve');
-const path = require('path');
+import path from "path";
+import resolve from "resolve";
+import findup from "findup-sync";
+import unique from "array-unique";
+import fastGlob from "fast-glob";
+import micromatch from "micromatch";
 
 export default {
   fromLocal,
