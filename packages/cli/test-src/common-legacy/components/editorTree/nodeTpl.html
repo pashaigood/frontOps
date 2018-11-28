@@ -1,0 +1,62 @@
+<div class="meditor_tree_node" >
+    <div ng-click="select(node)" class="group-item droppableOnTree"
+         dt-drag
+         dt-drag:options="meditorTree.dragOptions"
+         dt-drag:payload="meditorTree.getDragPayload(node)"
+         dt-drop
+         dt-drop:options="meditorTree.dropOptions"
+         dt-drop:success="meditorTree.onVariablesDrop(node, $payload, $dragScope, $parent.$parent.node.id)"
+         ng-class="{'hidden-group': !node.visible}">
+        <div class="dropDump"></div>
+        <div class="btn-toolbar" role="toolbar" ng-class="{'active-group': node.id==group.id}">
+            <span class="glyphicon glyphicon-folder-open angular-ui-tree-handle drag-handler folder-icon"></span>
+            <span class="name"
+                  buttons="no"
+                  editable-text="node.name"
+                  blur="submit"
+                  e-form="{{'form' + node.id}}"
+                  ng-dblclick="dblclick()"
+                  e-maxlength="255"
+                  onaftersave="renameFolder(node)">
+                {{node.name}}
+                <span ng-if="node.name.length == 0">empty</span>
+                <md-tooltip ng-if="node.name.length > 15" md-direction="top">{{node.name}}</md-tooltip>
+            </span>
+
+            <div class="pull-right">
+                <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown"
+                        aria-expanded="false">
+                    <span class="caret"></span>
+                    <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-click="createSubFolder(node)" href="#">Create subfolder</a></li>
+                    <li ng-show="node.visible"><a ng-click="hideFolder(node)" href="#">Hide</a></li>
+                    <li ng-hide="node.visible"><a ng-click="showFolder(node)" href="#">Show</a></li>
+                    <li class="divider"></li>
+                    <li><a ng-click="removeFolder(node)" href="#">Remove</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <ol class="angular-ui-tree-nodes" ng-model="node.groups">
+        <li ng-repeat="node in node.groups" ng-include="'components/editorTree/nodeTpl.html'"
+            ng-hide="node._deleted == true" ng-class="{'last': $last}"></li>
+
+        <li class="endPlaceholder">
+            <div class="meditor_tree_node">
+                <div class="group-item droppableOnTree"
+                     dt-drop
+                     dt-drop:options="meditorTree.dropOptions"
+                     dt-drop:success="meditorTree.onVariablesDrop(null, $payload, $dragScope, $parent.node.id)">
+                    <div class="dropDump"></div>
+                    <div class="btn-toolbar" role="toolbar">
+                        <span class="name" buttons="no"></span>
+
+                    </div>
+                </div>
+            </div>
+        </li>
+
+    </ol>
+</div>

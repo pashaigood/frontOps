@@ -1,0 +1,184 @@
+.meditor_tree_node {
+    .name {
+        white-space: nowrap;
+        display: inline-block;
+        width: calc(100% - 50px);
+        overflow: hidden;
+        text-overflow: ellipsis;
+        position: relative;
+        top: 3px;
+        cursor: pointer;
+    }
+    form.editable-wrap {
+        width: calc(100% - 50px);
+    }
+}
+.tree {
+    height: 100%;
+    overflow: auto;
+}
+.meditor-tree {
+    .drag-enter {
+        border: solid 1px red !important;
+    }
+    .dropDump {
+        height: 25px;
+        border: 2px dotted #B0C8D3;
+        background-color: #ECF7FF;
+        display: none;
+    }
+    .dragClone {
+        display: none;
+    }
+    
+    li.endPlaceholder {
+        display: none;
+        border-left-color: transparent;
+    }
+}
+.ng-isolate-scope:not(.leafsBeingDragged) {
+    .meditor-tree {
+        li.last {
+            border-left-color: transparent;
+        }
+    }
+}
+
+.leafsBeingDragged { 
+    .meditor-tree {
+        .drag-enter {
+            border-style: none !important;
+            .dropDump {
+                display: block;
+            }
+        }
+        .endPlaceholder {
+            display: block;
+        }
+    }
+}
+
+// OLD 
+.meditor-tree {
+
+
+    .hidden-group .input-box {
+        opacity: 0.2;
+    }
+    .angular-ui-tree-handle {
+        background: none;
+        border: 0px solid #dae2ea;
+        color: #7c9eb2;
+        padding: 1px 3px;
+    }
+    .angular-ui-tree-handle:hover {
+        color: #438eb9;
+    }
+    .angular-ui-tree-placeholder {
+        background: #f0f9ff;
+        border: 2px dashed #bed2db;
+        -webkit-box-sizing: border-box;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+    }
+    .group-title {
+        background-color: #687074 !important;
+        color: #FFF !important;
+    }
+    .editable-click,
+    a.editable-click {
+        text-decoration: none;
+        border-bottom: dashed 0px #428bca;
+        color: #000000;
+    }
+    .active-group {
+        background-color: rgba(35, 179, 221, 0.75) !important;
+        .angular-ui-tree-handle {
+            color: #FFFFFF;
+        }
+        .input-box {
+            color: #FFFFFF;
+        }
+        .editable-click,
+        a.editable-click {
+            text-decoration: none;
+            color: #FFFFFF;
+            border-bottom: dashed 0px #428bca;
+        }
+    }
+
+    .input-box {
+        position: absolute;
+        margin-right: 33px;
+        border: 0px solid;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        .editable-input {
+            height: 22px;
+            color: #000000;
+        }
+    }
+    button {
+        background: none;
+        border: none;
+        color: #cccccc;
+    }
+    button:hover {
+        background: none;
+        border: none;
+        color: #000000;
+    }
+    .editable-input {
+        width: 100%;
+    }
+    .group-item .btn-toolbar:hover {
+        background-color: rgba(66, 139, 202, 0.20);
+        .angular-ui-tree-handle {
+            opacity: 1;
+        }
+    }
+    ol {
+        padding: 0;
+        margin: 0;
+        list-style-type: none;
+        position: relative;
+    }
+    li {
+        list-style-type: none;
+        border-left: 2px solid rgba(204, 204, 204, 0.63);
+        margin-left: -1px;
+    }
+    li div.group-item {
+        padding-left: 1em;
+        position: relative;
+
+            &.hidden-group {
+                .name, .folder-icon{
+                    opacity: 0.4;
+                    &:hover{
+                        opacity: 0.4;
+                    }
+                }
+            }
+
+    }
+    li div.group-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -2px;
+        bottom: 50%;
+        width: 0.75em;
+        border: 2px solid rgba(204, 204, 204, 0.63);
+        border-top: 0 none transparent;
+        border-right: 0 none transparent;
+    }
+    ol > li:last-child {
+        border-left: 2px solid transparent;
+    }
+}
+
+.angular-ui-tree-drag {
+    padding: 0px;
+}

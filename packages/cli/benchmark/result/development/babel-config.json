@@ -1,0 +1,6 @@
+{
+  "babelTransformRuntime": false,
+  "babelCacheDirectory": true,
+  "babelBrowser": true,
+  "babelIgnoreModules": true
+}

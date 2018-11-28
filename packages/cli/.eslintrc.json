@@ -1,0 +1,35 @@
+{
+  "extends": [
+    "standard",
+    "standard-jsx"
+  ],
+  "plugins": [
+    "standard",
+    "promise",
+    "jasmine"
+  ],
+  "rules": {
+    "import/no-webpack-loader-syntax": 0,
+    "react/jsx-space-before-closing": 0,
+    "react/jsx-tag-spacing": 1
+  },
+  "env": {
+    "jasmine": true
+  },
+  "parser": "babel-eslint",
+  "globals": {
+    "fetch": true,
+    "location": true,
+    "require": true,
+    "console": true,
+    "angular": true,
+    "_": true,
+    "__DEV__": true,
+    "__CLIENT__": true,
+    "__SERVER__": true,
+    "__DEVTOOLS__": true,
+    "__TEST__": true,
+    "socket": true,
+    "$": true
+  }
+}

@@ -1,0 +1,16 @@
+// Included here so we can babel-node various scripts. The real babel
+// configuration happens in each specific Webpack config.
+{
+  "presets": [
+    ["env", {
+      "targets": {
+        "node": "8.6"
+      }
+    }]
+  ],
+  "plugins": [
+    "syntax-dynamic-import",
+    "transform-object-rest-spread"
+  ],
+  "ignore": ["node_modules"]
+}

@@ -1,0 +1,4 @@
+{
+  "happypack": true,
+  "babelCacheDirectory": true
+}

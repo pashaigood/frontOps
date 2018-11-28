@@ -1,0 +1,7 @@
+<div class="meditor-tree" data-empty-place-holder-enabled="false">
+    <ol ng-model="data" id="tree-root" class="uat_md_tree angular-ui-tree-nodes">
+        <li ng-repeat="node in data" ng-include="'components/editorTree/nodeTpl.html'" class="uat_md_node"></li>
+    </ol>
+
+    <span class="dragClone glyphicon glyphicon-folder-open angular-ui-tree-handle drag-handler"></span>
+</div>
