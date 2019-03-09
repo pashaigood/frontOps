@@ -1,10 +1,11 @@
 {
   "name": "@frontops/cli",
-  "version": "1.4.1",
-  "description": "Datatile build system",
+  "private": true,
+  "version": "1.0.0",
+  "description": "",
   "main": "dist/index.js",
   "bin": {
-    "dbs": "index.js"
+    "frontOps": "index.js"
   },
   "scripts": {
     "postinstall": "rimraf ./dist && npm run build",
@@ -24,7 +25,7 @@
     "system",
     "es6"
   ],
-  "author": "pashaigood",
+  "author": "Pavel Belugin aka @frontops",
   "license": "ISC",
   "dependencies": {
     "@storybook/react": "^3.3.10",
