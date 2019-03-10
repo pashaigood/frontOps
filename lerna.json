@@ -5,15 +5,13 @@
   ],
   "command": {
     "publish": {
-      "ignoreChanges": ["packages/cli/**", "packages/webpack/**"],
       "message": "chore(release): publish"
     },
     "bootstrap": {
       "private": false
     },
     "version": {
-      "allowBranch": "master",
-      "ignoreChanges": ["packages/cli/**", "packages/webpack/**"]
+      "allowBranch": "master"
     }
   }
 }
