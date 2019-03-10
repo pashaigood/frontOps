@@ -2,16 +2,17 @@ import { compose, createStore, combineReducers } from 'redux'
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
 
-export default function (reducers, middlewares, initialState, enhancer) {
+export default function (reducers = {}, middlewares = [], initialState, enhancer) {
   const hotMiddleware = composeEnhancers(createHotMiddleware(middlewares))
 
+  reducers.meta = () => ({})
   const store = createStore(
     combineReducers(reducers),
     initialState,
     enhancer ? enhancer(hotMiddleware) : hotMiddleware
   )
-  store.reducers = reducers || {}
-  store.middlewares = middlewares || []
+  store.reducers = reducers
+  store.middlewares = middlewares
   store.addReducer = addReducer.bind(store)
   store.addMiddleware = addMiddleware.bind(store)
 
