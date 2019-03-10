@@ -1,0 +1,53 @@
+{
+  "name": "@frontops/redux-utils",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "scripts": {
+    "clean": "rm -rf lib",
+    "babel": "babel src -d lib",
+    "build": "npm run clean && npm run babel",
+    "test": "jest src"
+  },
+  "peerDependencies": {
+    "redux": "^4.0.1"
+  },
+  "keywords": [],
+  "author": "Pavel Belugin aka @frontOps",
+  "license": "ISC",
+  "browserslist": [
+    "last 1 version",
+    "> 1%",
+    "ie 10",
+    "maintained node versions",
+    "not dead"
+  ],
+  "babel": {
+    "presets": [
+      ["@babel/preset-env", {
+        "loose": true,
+        "useBuiltIns": "entry"
+      }]
+    ],
+    "plugins": [
+      "@babel/proposal-export-default-from"
+    ]
+  },
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statements": 100
+      }
+    }
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "@babel/preset-env": "^7.3.4",
+    "jest": "^24.3.1",
+    "redux": "^4.0.1"
+  },
+  "dependencies": {}
+}
