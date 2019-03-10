@@ -1,0 +1,21 @@
+{
+  "presets": [
+    [
+      "@babel/preset-env",
+      {
+        "loose": true,
+        "useBuiltIns": "entry"
+      }
+    ]
+  ],
+  "plugins": [
+    "@babel/proposal-export-default-from",
+    "@babel/proposal-class-properties",
+    ["module-resolver", {
+      "alias": {
+        "@frontops/redux-crud": "./src",
+        "@": "./example/"
+      }
+    }]
+  ]
+}

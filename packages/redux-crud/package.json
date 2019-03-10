@@ -1,0 +1,41 @@
+{
+  "name": "@frontops/redux-crud",
+  "version": "1.0.0",
+  "description": "",
+  "module": "lib/index.js",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "example": "parcel serve -d ./example/dist --cache-dir ./example/.cache example/index.html",
+    "build": "babel src --out-dir lib",
+    "start": "npm run build -- --watch"
+  },
+  "babel": {
+    "presets": [
+      [
+        "@babel/preset-env",
+        {
+          "loose": true,
+          "useBuiltIns": "entry"
+        }
+      ]
+    ],
+    "plugins": [
+      "@babel/proposal-export-default-from",
+      "@babel/proposal-class-properties"
+    ]
+  },
+  "dependencies": {
+    "@frontops/redux-utils": "*",
+    "immutable": "^4.0.0-rc.12"
+  },
+  "author": "Pavel Belugin aka @frontops",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/cli": "^7.2.3",
+    "@babel/core": "^7.3.4",
+    "@babel/plugin-proposal-class-properties": "^7.3.4",
+    "@babel/plugin-proposal-export-default-from": "^7.2.0",
+    "parcel": "^1.12.0"
+  }
+}
