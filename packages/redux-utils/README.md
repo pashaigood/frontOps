@@ -5,6 +5,9 @@
 [![Build Status][travis-image]][travis-url]
 [![Downloads Stats][npm-downloads]][npm-url]
 
+# DISCLAIMER
+## DO NOT USE THIS, IT'S ALPHA VERSION
+
 ## Features
 
 List of tools to easier redux's application setup and development.

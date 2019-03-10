@@ -1,6 +1,8 @@
 {
+  "author": "Pavel Belugin aka @frontops",
   "name": "@frontops/redux-utils",
   "version": "1.0.4",
+  "sideEffects": false,
   "description": "",
   "module": "lib/index.js",
   "main": "src/index.js",
@@ -14,11 +16,12 @@
     "build": "npm run clean && npm run babel",
     "test": "jest src"
   },
-  "peerDependencies": {
-    "redux": "^4.0.1"
-  },
+  "files": [
+    "/src",
+    "/lib",
+    "!package-lock.json"
+  ],
   "keywords": [],
-  "author": "Pavel Belugin aka @frontOps",
   "license": "ISC",
   "browserslist": [
     "last 1 version",
@@ -47,6 +50,9 @@
         "statements": 100
       }
     }
+  },
+  "peerDependencies": {
+    "redux": "^4.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.3",
