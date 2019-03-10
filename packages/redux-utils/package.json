@@ -26,10 +26,13 @@
   ],
   "babel": {
     "presets": [
-      ["@babel/preset-env", {
-        "loose": true,
-        "useBuiltIns": "entry"
-      }]
+      [
+        "@babel/preset-env",
+        {
+          "loose": true,
+          "useBuiltIns": "entry"
+        }
+      ]
     ],
     "plugins": [
       "@babel/proposal-export-default-from"
