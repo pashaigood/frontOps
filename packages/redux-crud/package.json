@@ -1,7 +1,7 @@
 {
   "author": "Pavel Belugin aka @frontops",
   "name": "@frontops/redux-crud",
-  "version": "1.0.4",
+  "version": "0.1.0",
   "sideEffects": false,
   "description": "",
   "module": "lib/index.js",
@@ -39,7 +39,7 @@
     ]
   },
   "dependencies": {
-    "@frontops/redux-utils": "^1.0.4",
+    "@frontops/redux-utils": "^0.1.0",
     "immutable": "^4.0.0-rc.12"
   },
   "license": "MIT",
