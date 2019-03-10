@@ -1,5 +1,6 @@
 {
-  "name": "@frontOps/webpack",
+  "name": "@frontops/webpack",
+  "private": true,
   "version": "1.0.0",
   "description": "Webpack bootsrap",
   "main": "index.js",
