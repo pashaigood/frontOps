@@ -4,12 +4,14 @@
   "main": "index.js",
   "scripts": {
     "postinstall": "lerna bootstrap --no-private",
-    "build": "lerna run build --scope={@frontops/redux-crud,@frontops/redux-utils}",
-    "test": "lerna run test --scope={@frontops/redux-crud,@frontops/redux-utils}"
+    "clean": "lerna run clean",
+    "build": "lerna run build --scope={$(scripts/changed)}",
+    "test": "lerna run test --scope={$(scripts/changed)}"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "copy-dir": "^0.4.0",
     "lerna": "^3.4.3",
     "standard": "^12.0.1"
   }

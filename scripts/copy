@@ -1,0 +1,13 @@
+#!/usr/bin/env node
+
+const { spawnSync } = require('child_process')
+const changes = spawnSync(__dirname + '/..//node_modules/.bin/lerna',['changed', '-p'])
+
+const files = changes.stdout.toString().trim().split('\n')
+console.log(files)
+files.forEach(path => {
+  const name = path.split('/').pop()
+  // copydir.sync(path + '/lib', );
+  const result = spawnSync('cp', ['-R', path + '/lib', '.tmp/' + name])
+  console.log(result.stderr.toString())
+})

@@ -1,0 +1,7 @@
+#!/usr/bin/env node
+
+const { spawnSync } = require('child_process')
+const changes = spawnSync(__dirname + '/..//node_modules/.bin/lerna', ['changed'])
+
+const files = changes.stdout.toString().trim().split("\n")
+console.log(files.join(','))
