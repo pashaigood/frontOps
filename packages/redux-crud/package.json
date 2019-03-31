@@ -17,7 +17,6 @@
     "start": "npm run build -- --watch"
   },
   "files": [
-    "!/src",
     "/lib",
     "/example",
     "!/example/{.cache,node_modules,dist}",

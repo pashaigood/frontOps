@@ -6,7 +6,8 @@
     "postinstall": "lerna bootstrap --no-private",
     "clean": "lerna run clean",
     "build": "lerna run build --scope={$(scripts/changed)}",
-    "test": "lerna run test --scope={$(scripts/changed)}"
+    "test": "lerna run test --scope={$(scripts/changed)}",
+    "release": "npm run test && npm run build && lerna publish"
   },
   "author": "",
   "license": "ISC",
