@@ -83,6 +83,20 @@ describe('createStore.js', () => {
       store.dispatch(testAction)
       expect(testAction.payload).toBe(marker)
     })
+
+    it ('should invoke middleware root just once', () => {
+      const testAction = mockAction('invoke')
+      const callSpy = jasmine.createSpy('s')
+      middleware = fake(store => {
+        callSpy()
+        return next => action => next(action)
+      })
+      store.addMiddleware(middleware)
+      store.dispatch(testAction)
+      expect(callSpy).toHaveBeenCalled();
+      store.dispatch(testAction)
+      expect(callSpy).toHaveBeenCalledTimes(1);
+    })
   })
 })
 

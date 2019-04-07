@@ -21,7 +21,7 @@ export default function (reducers = {}, middlewares = [], initialState, enhancer
 
 /**
  *
- * @param {[function]|function} newMiddleware
+ * @param {function|[function]} newMiddleware
  */
 function addMiddleware (newMiddleware) {
   this.middlewares.push(...[].concat(newMiddleware))
@@ -38,6 +38,7 @@ function addReducer (reducers) {
 }
 
 function createHotMiddleware (middlewares) {
+  let middlewareMap = new Map()
   return createStore => (reducer, initialState, enhancer) => {
     const store = createStore(reducer, initialState, enhancer)
     let dispatch = store.dispatch
@@ -47,7 +48,12 @@ function createHotMiddleware (middlewares) {
       dispatch: action => dispatch(action)
     }
     dispatch = action => compose(
-      ...middlewares.map(middleware => middleware(middlewareAPI))
+      ...middlewares.map(middleware => {
+        if (!middlewareMap.get(middleware)) {
+          middlewareMap.set(middleware, middleware(middlewareAPI))
+        }
+        return middlewareMap.get(middleware)
+      })
     )(store.dispatch)(action)
 
     return {
