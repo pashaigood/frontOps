@@ -1,7 +1,7 @@
 {
   "author": "Pavel Belugin aka @frontops",
   "name": "@frontops/redux-utils",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "sideEffects": false,
   "description": "",
   "module": "lib/index.js",

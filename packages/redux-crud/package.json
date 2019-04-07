@@ -38,7 +38,7 @@
     ]
   },
   "dependencies": {
-    "@frontops/redux-utils": "^0.1.1",
+    "@frontops/redux-utils": "^0.1.2",
     "immutable": "^4.0.0-rc.12"
   },
   "license": "MIT",
